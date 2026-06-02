@@ -39,9 +39,4 @@ Makie.convert_arguments(P::Type{<:Band}, x::AbstractVector{<:Measurement}, y::Ab
 Makie.convert_arguments(P::Type{<:Band}, x::AbstractVector{<:Real}, y::AbstractVector{<:Measurement}) =
     Makie.convert_arguments(P, x, value.(y) - uncertainty.(y), value.(y) + uncertainty.(y))
 
-# TODO: See if this bit can be upstreamed to Makie
-# https://github.com/MakieOrg/Makie.jl/pull/5484#issuecomment-4463122186
-Makie.argument_dims(::Type{<:Band}, ::AbstractVector, ::AbstractVector; direction) =
-    direction === :x ? (1, 2) : (2, 1)
-
 end #module
