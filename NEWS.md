@@ -1,5 +1,19 @@
 # History of Measurements.jl
 
+## Unreleased
+
+### New features
+
+* With `Makie.jl`, `errorbars(x, y)` picks the direction of the errorbars from which arguments carry uncertainties: horizontal when only `x` has uncertainties, and both directions (sharing one color) when `x` and `y` both do.
+
+    Since the direction follows from the data, the `direction` keyword argument cannot be set. To choose the direction, pass the errors explicitly instead. Similarly, `band(x, y)` with uncertainties only on `x` draws a horizontal band.
+
+    With Makie v0.25 and later, `Measurement`s with units from `Unitful.jl` or `DynamicQuantities.jl` are also supported.
+
+### Bug Fixes
+
+* With `Makie.jl`, `errorbars(x, y)` with uncertainties only on `x` no longer draws them as vertical errorbars, and `errorbars(x, y)` with uncertainties on both `x` and `y` no longer throws an ambiguity error ([#213](https://github.com/JuliaPhysics/Measurements.jl/pull/213)).
+
 ## [v2.14.1](https://github.com/JuliaPhysics/Measurements.jl/releases/tag/v2.14.1) (2025-10-18)
 
 ### Bug Fixes
