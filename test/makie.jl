@@ -1,4 +1,4 @@
-import Makie: convert_arguments, Point, PointBased, Errorbars, Band, Vec, PlotSpec, PlotList
+import Makie: convert_arguments, Point, PointBased, Errorbars, Band, PlotSpec, PlotList
 
 @testset "PointBased" begin
     @test convert_arguments(PointBased(), [1, 2], [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)]) == (Point{2,Float64}[[1.0, 1.0], [2.0, 2.0]],)
@@ -8,9 +8,10 @@ import Makie: convert_arguments, Point, PointBased, Errorbars, Band, Vec, PlotSp
 end
 
 @testset "Errorbars" begin
-    @test convert_arguments(Errorbars, [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)],
-                                       [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)],
-                                       [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)]) == (Vec{4, Float64}[[1.0, 1.0, 0.5, 0.5], [2.0, 2.0, 0.1, 0.1]],)
+    # The errors can't be given as `Measurement`s, the uncertainties of `x` and `y` are used instead
+    @test_throws "use `errorbars(x, y)`" convert_arguments(Errorbars, [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)],
+                                                                      [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)],
+                                                                      [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)])
 
     xmeas = [Measurements.measurement(1.0, 0.5), Measurements.measurement(2.0, 0.1)]
     ymeas = [Measurements.measurement(3.0, 0.2), Measurements.measurement(4.0, 0.3)]

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Breaking changes
+
+* With `Makie.jl`, `errorbars(x, y, e)` with `Measurement`s for all of `x`, `y`, and `e` now throws an informative error instead of plotting the uncertainties of `e`, which could silently draw them along the wrong direction. Use `errorbars(x, y)` instead, or pass the errors explicitly as plain numbers.
+
 ### New features
 
 * With `Makie.jl`, `errorbars(x, y)` picks the direction of the errorbars from which arguments carry uncertainties: horizontal when only `x` has uncertainties, and both directions (sharing one color) when `x` and `y` both do.

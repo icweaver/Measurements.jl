@@ -31,8 +31,8 @@ Makie.convert_arguments(P::PointBased, x::AbstractVector{<:Measurement}, y::Abst
     Makie.convert_arguments(P, value.(x), y)
 
 # errorbars
-Makie.convert_arguments(P::Type{<:Errorbars}, x::AbstractVector{<:Measurement}, y::AbstractVector{<:Measurement}, e::AbstractVector{<:Measurement}) =
-    Makie.convert_arguments(P, value.(x), value.(y), uncertainty.(e))
+Makie.convert_arguments(::Type{<:Errorbars}, ::AbstractVector{<:Measurement}, ::AbstractVector{<:Measurement}, ::AbstractVector{<:Measurement}) =
+    throw(ArgumentError("errorbars of `Measurement`s are drawn from the uncertainties of `x` and `y`, so use `errorbars(x, y)`. To pass the errors explicitly, use plain numbers, e.g. `errorbars(Measurements.value.(x), Measurements.value.(y), Measurements.uncertainty.(y); direction = :y)`"))
 Makie.convert_arguments(::Type{<:Errorbars}, x::AbstractVector{<:Measurement}, y::AbstractVector{<:Real}) =
     S.MeasurementErrorbars(value.(x), y, uncertainty.(x), Float64[])
 Makie.convert_arguments(::Type{<:Errorbars}, x::AbstractVector{<:Measurement}, y::AbstractVector{<:Measurement}) =
